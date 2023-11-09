@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://hzx.liukanshan.top:3306/lks?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://hzx.liukanshan.top:3306/lks?useSSL=true&serverTimezone=UTC
     username: lks
     password: ZRin7yzJGYDJa47S
 mybatis-plus:
