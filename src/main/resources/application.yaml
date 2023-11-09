@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://hzx.liukanshan.top:3306/lks?useSSL=false&serverTimezone=UTC
+    username: lks
+    password: ZRin7yzJGYDJa47S
+mybatis-plus:
+  type-aliases-package: top.liukanshan.shoppingwebsite.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      id-type: auto
+      update-strategy: not_null
+      table-prefix: tb_
