@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Item {
-    private long id;
+    private Long id;
     private String name;
     private BigDecimal price;
     private String imgPath;

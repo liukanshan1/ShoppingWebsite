@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Cart {
 
-    private long id;
-    private long userId;
-    private long itemId;
+    private Long id;
+    private Long userId;
+    private Long itemId;
     private int count;
 }

@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderItem {
-    private long id;
-    private long orderId;
-    private long itemId;
+    private Long id;
+    private Long orderId;
+    private Long itemId;
     private int count;
 }

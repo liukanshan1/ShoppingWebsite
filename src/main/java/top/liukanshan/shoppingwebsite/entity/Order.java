@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
-    private long id;
+    private Long id;
     private long userId;
     private BigDecimal amount;
 
