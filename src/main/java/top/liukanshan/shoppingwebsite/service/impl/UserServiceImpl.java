@@ -16,7 +16,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result login(User user) {
-        User u = userMapper.selectById(user.getId()); //TODO
+        User u = userMapper.selectUserByName(user.getUsername());
         if (u != null) {
             if (u.getPassword().equals(user.getPassword())) {
                 return Result.ok("登录成功");
@@ -30,7 +30,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result register(User user) {
-        User u = userMapper.selectById(user.getId());
+        User u = userMapper.selectUserByName(user.getUsername());
         if (u != null) {
             return Result.fail("用户已存在");
         } else {
