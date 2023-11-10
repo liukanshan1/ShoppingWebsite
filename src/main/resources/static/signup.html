@@ -15,8 +15,9 @@
   <div class="container__form container--signup">
     <form action="#" class="form" id="form1">
       <h2 class="form__title">注册</h2>
-      <input type="text" placeholder="User" class="input" v-model="account.id"/>
+      <input type="text" placeholder="User" class="input" v-model="account.username"/>
       <input type="text" placeholder="Role" class="input" v-model="account.role"/>
+      <input type="text" placeholder="Email" class="input" v-model="account.email"/>
       <input type="password" placeholder="Password" class="input" v-model="account.password"/>
       <button class="btn" @click="handleAdd">Sign Up</button>
     </form>
@@ -38,21 +39,19 @@
     el: '#app',
     data:{
       account:{
-        id:'',
+        username:'',
         password:'',
+        email:'',
         role:''
       }
     },
     methods: {
       handleAdd(){
-        axios.post("/account",this.account).then((res)=>{
-          if(res.data.code == 20011){
-            alert("注册成功");
-            window.location.href = 'signup-page.html'
-          }else if(res.data.code == 20010){
-            alert("注册失败");
-            this.account.id = '';
-            this.account.password = '';
+        axios.put("/user",this.account).then((res)=>{
+          if(res.data.success){
+            window.location.href = 'login.html'
+          } else {
+            alert(res.data.errorMsg);
           }
         })
       }

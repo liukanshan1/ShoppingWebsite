@@ -15,8 +15,8 @@
     <div class="container__form container--signin">
         <form action="#" class="form" id="form2">
             <h2 class="form__title">登录</h2>
-            <input type="text" placeholder="User" class="input" v-model="id"/>
-            <input type="password" placeholder="Password" class="input" v-model="password"/>
+            <input type="text" placeholder="User" class="input" v-model="user.username"/>
+            <input type="password" placeholder="Password" class="input" v-model="user.password"/>
             <button class="btn" @click="handlegetById">Sign In</button>
         </form>
     </div>
@@ -33,20 +33,20 @@
     const vue = new Vue({
         el: '#app',
         data: {
-            id:'',
-            password:'',
-            confirmPassword:''
+            user:{
+                username:'',
+                password:''
+            }
         },
 
         methods: {
             handlegetById(){
-                axios.get("/account/" + this.id).then((res)=>{
-                    this.confirmPassword = res.data.data.password;
-                    if (this.confirmPassword === this.password) {
-                        window.location.href = 'buyer-page.html'
-                    } else {
-                        alert("密码或者账号错误")
-                    }
+                axios.post('/user', this.user).then((res)=>{
+                       if(res.data.success){
+                           window.location.href = 'buyer.html'
+                       } else {
+                            alert(res.data.errorMsg);
+                       }
                 })
             }
         },
