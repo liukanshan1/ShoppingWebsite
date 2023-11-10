@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login!</title>
+  <link rel="stylesheet" href="css/login-page.css">
+  <link rel="stylesheet" href="elementui/index.css">
+</head>
+
+<body>
+<div class="container" id="app">
+<div class="container right-panel-active">
+  <!-- Sign Up -->
+  <div class="container__form container--signup">
+    <form action="#" class="form" id="form1">
+      <h2 class="form__title">注册</h2>
+      <input type="text" placeholder="User" class="input" v-model="account.id"/>
+      <input type="text" placeholder="Role" class="input" v-model="account.role"/>
+      <input type="password" placeholder="Password" class="input" v-model="account.password"/>
+      <button class="btn" @click="handleAdd">Sign Up</button>
+    </form>
+  </div>
+
+  <div class="overlay__panel overlay--left">
+    <a class="btn" id="signIn" href="login.html">Sign In</a>
+  </div>
+
+
+</div>
+</div>
+
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="axios-0.18.0.js"></script>
+
+<script>
+  const vue = new Vue({
+    el: '#app',
+    data:{
+      account:{
+        id:'',
+        password:'',
+        role:''
+      }
+    },
+    methods: {
+      handleAdd(){
+        axios.post("/account",this.account).then((res)=>{
+          if(res.data.code == 20011){
+            alert("注册成功");
+            window.location.href = 'signup-page.html'
+          }else if(res.data.code == 20010){
+            alert("注册失败");
+            this.account.id = '';
+            this.account.password = '';
+          }
+        })
+      }
+    },
+  });
+</script>
+</body>
+</html>

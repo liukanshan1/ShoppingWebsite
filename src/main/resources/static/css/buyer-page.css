@@ -1,0 +1,91 @@
+html{
+    height: 100%;
+}
+body {
+    height: 100%;
+    background-color: white;
+    margin:0;
+    padding: 0;
+    font-family: Arial,sans-serif;
+}
+
+#app {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.type-button {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.type-button:hover {
+    background-color: #0056b3;
+}
+
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.book {
+    width: calc(30% - 20px);
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.book:hover {
+    transform: translateY(-5px);
+}
+
+.book-image {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.book-info {
+    padding: 10px;
+    text-align: center;
+}
+
+.book-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.book-type,
+.book-number {
+    font-size: 14px;
+    color: #777;
+}
