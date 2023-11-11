@@ -16,3 +16,5 @@ mybatis-plus:
       id-type: auto
       update-strategy: not_null
       table-prefix: tb_
+server:
+  port: 18080
