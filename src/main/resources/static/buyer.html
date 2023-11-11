@@ -20,6 +20,7 @@
                 <p class="book-name">{{ book.name }}</p>
                 <p class="book-number">剩余数量: {{ book.count }}</p>
                 <p class="book-number">价格: {{ book.price }}</p>
+                <button @click="addCart(book.id)" class="type-button">加入购物车</button>
             </div>
         </div>
     </div>
@@ -66,6 +67,9 @@
                             this.books = res.data.data;
                         })
                     }
+                },
+                addCart(id) {
+                    console.log(id)
                 },
             }
          });
