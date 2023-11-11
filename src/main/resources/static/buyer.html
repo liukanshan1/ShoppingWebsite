@@ -72,7 +72,12 @@
                     //console.log(id)
                     axios.get("/cart/" + id).then((res)=>{
                         alert(res.data.data)
-                    })
+                    }).catch(function (error) {
+                        if (error.response.status === 400) {
+                            alert("未登录，自动跳转到登录页面！")
+                            window.location.href = 'login.html'
+                        }
+                    });
                 },
             }
          });

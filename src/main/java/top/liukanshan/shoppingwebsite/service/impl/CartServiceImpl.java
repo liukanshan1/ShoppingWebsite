@@ -31,7 +31,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
                 return Result.ok("成功加入一件商品，商品数量：" + cart.getCount());
             }
         }
-        return Result.ok("加入失败");
+        return Result.fail("加入失败");
     }
 
     @Override
