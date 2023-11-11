@@ -3,25 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>购买页面</title>
-    <link rel="stylesheet" href="css/buyer-page.css">
+    <link rel="stylesheet" href="css/buyer.css">
 </head>
 
 <body>
 <div id="app">
     <div class="header">
-        <input v-model="search" placeholder="搜索书名" class="search-input">
+        <input v-model="search" placeholder="搜索商品名" class="search-input">
         <button @click="getNeedId" class="type-button">搜索</button>
-        <button @click="showTypeDialog" class="type-button">选择类型</button>
     </div>
     <template>
     <div class="book-list">
         <div class="book" v-for="book in books" :key="book.id">
-            <img :src="book.image" alt="书本图片" class="book-image">
+            <img :src="book.imgPath" alt="图片" class="book-image">
             <div class="book-info">
-                <p class="book-name">{{ book.book_name }}</p>
-                <p class="book-type">类型: {{ book.book_type }}</p>
-                <p class="book-number">剩余数量: {{ book.book_number }}</p>
-                <p class="book-number">价格: {{ book.book_price }}</p>
+                <p class="book-name">{{ book.name }}</p>
+                <p class="book-number">剩余数量: {{ book.count }}</p>
+                <p class="book-number">价格: {{ book.price }}</p>
             </div>
         </div>
     </div>
@@ -62,9 +60,9 @@
                     })
                 },
                 getAll(){
-                    axios.get("/book").then((res)=>{
+                    axios.get("/item").then((res)=>{
                         this.books = res.data.data;
-                        console.log(res.data.data)
+                        //console.log(res.data.data)
                     })
                 },
                 getNeedId() {
