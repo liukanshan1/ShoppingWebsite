@@ -2,6 +2,7 @@ package top.liukanshan.shoppingwebsite.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import top.liukanshan.shoppingwebsite.dto.Result;
 import top.liukanshan.shoppingwebsite.entity.User;
@@ -19,7 +20,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User u = userMapper.selectUserByName(user.getUsername());
         if (u != null) {
             if (u.getPassword().equals(user.getPassword())) {
-                return Result.ok("登录成功");
+                ResponseCookie cookie = ResponseCookie.from("user", String.valueOf(u.getId())).build();
+                return Result.ok(cookie);
             } else {
                 return Result.fail("密码错误");
             }
