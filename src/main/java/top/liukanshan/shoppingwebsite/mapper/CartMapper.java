@@ -6,4 +6,5 @@ import top.liukanshan.shoppingwebsite.entity.Cart;
 
 @Mapper
 public interface CartMapper extends BaseMapper<Cart> {
+    public Cart selectByUserItem(long userId, long itemId);
 }

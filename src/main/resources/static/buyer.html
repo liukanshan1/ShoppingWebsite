@@ -69,7 +69,10 @@
                     }
                 },
                 addCart(id) {
-                    console.log(id)
+                    //console.log(id)
+                    axios.get("/cart/" + id).then((res)=>{
+                        alert(res.data.data)
+                    })
                 },
             }
          });
