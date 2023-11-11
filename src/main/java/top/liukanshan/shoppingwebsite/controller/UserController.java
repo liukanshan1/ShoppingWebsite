@@ -1,5 +1,6 @@
 package top.liukanshan.shoppingwebsite.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.liukanshan.shoppingwebsite.dto.Result;
@@ -16,8 +17,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public Result login(@RequestBody User user) {
-        return userService.login(user);
+    public Result login(@RequestBody User user, HttpServletResponse response) {
+        return userService.login(user, response);
     }
 
     @PutMapping

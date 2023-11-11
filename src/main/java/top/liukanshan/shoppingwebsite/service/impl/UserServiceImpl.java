@@ -1,6 +1,8 @@
 package top.liukanshan.shoppingwebsite.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     @Override
-    public Result login(User user) {
+    public Result login(User user, HttpServletResponse response) {
         User u = userMapper.selectUserByName(user.getUsername());
         if (u != null) {
             if (u.getPassword().equals(user.getPassword())) {
-                ResponseCookie cookie = ResponseCookie.from("user", String.valueOf(u.getId())).build();
-                return Result.ok(cookie);
+                response.addCookie(new Cookie("user" , u.getId().toString()));
+                return Result.ok();
             } else {
                 return Result.fail("密码错误");
             }
