@@ -33,9 +33,7 @@
             el: '#app',
             data: {
                 search: '',
-                selectedTypes: [],
                 books: [],
-                //formData: {},
             },
             created() {
                 this.getAll()
@@ -47,18 +45,6 @@
                     const encodedText = encodeURIComponent(chineseText);
                     console.log(encodedText); // 输出 "%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C"
                 },
-                getNeedType() {
-                    const selected = prompt('请选择书本类型（以逗号分隔）：');
-                    let temp = encodeURIComponent(selected);
-                    axios.get("/book/byType/" + temp).then((res)=>{
-                        if(res.data.code == 20041){
-                            this.books = res.data.data;
-                        }else if(res.data.code == 20040){
-                            this.search = '';
-                            alert("您输入的类型不存在");
-                        }
-                    })
-                },
                 getAll(){
                     axios.get("/item").then((res)=>{
                         this.books = res.data.data;
@@ -66,33 +52,22 @@
                     })
                 },
                 getNeedId() {
-                    let temp = encodeURIComponent(this.search);
-                    axios.get("/book/byName/" + temp).then((res) => {
-                        if (res.data.code == 20041) {
-                            this.books= JSON.parse(JSON.stringify(res.data.data));
-                            this.search = '';
-                            console.log(this.books)
-                           //this.getAll();
-                        } else if (res.data.code == 20040) {
-                            this.search = '';
-                            alert("找不到该书本");
-                        }
-                    })
-                },
-            },
-            computed: {
-                filteredBooks() {
-                    let filtered = this.books;
-                    if (this.selectedTypes.length > 0) {
-                        filtered = filtered.filter(book => this.selectedTypes.includes(book.type));
+                    if (this.search !== ""){
+                        axios.get("/item/" + this.search).then((res) => {
+                            if (res.data.total === 0){
+                                alert("未找到任何商品！")
+                            } else {
+                                this.books = res.data.data;
+                            }
+                        })
+                    } else {
+                        alert("搜索内容不能为空！")
+                        axios.get("/item").then((res)=>{
+                            this.books = res.data.data;
+                        })
                     }
-                    if (this.search) {
-                        const keyword = this.search.toLowerCase();
-                        filtered = filtered.filter(book => book.name.toLowerCase().includes(keyword));
-                    }
-                    return filtered;
                 },
-            },
+            }
          });
 </script>
 </body>
