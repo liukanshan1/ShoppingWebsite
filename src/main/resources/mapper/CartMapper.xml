@@ -9,4 +9,16 @@
         WHERE user_id = #{userId} AND item_id = #{itemId}
     </select>
 
+    <select id="selectByUserId" resultType="top.liukanshan.shoppingwebsite.entity.Cart">
+        SELECT *
+        FROM  tb_cart
+        WHERE user_id = #{userId}
+    </select>
+
+    <delete id="deleteByUserItem">
+        DELETE
+        FROM tb_cart
+        WHERE user_id = #{userId} AND item_id = #{itemId}
+    </delete>
+
 </mapper>

@@ -12,15 +12,19 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+    @GetMapping()
+    public Result getCart(@CookieValue("user") Long userId){
+        return cartService.getCart(userId);
+    }
+
     @GetMapping("/{itemId}")
     public Result addCart(@CookieValue("user") Long userId, @PathVariable Long itemId){
         return cartService.addCart(userId, itemId);
     }
 
-    @GetMapping()
-    public Result getAllCart(@CookieValue("user") Long userId){
-        return cartService.getAllCart(userId);
+    @DeleteMapping("/{itemId}")
+    public Result deleteCart(@CookieValue("user") Long userId, @PathVariable Long itemId){
+        return cartService.deleteCart(userId, itemId);
     }
-
 
 }

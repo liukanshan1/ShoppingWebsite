@@ -2,16 +2,14 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>购买页面</title>
+    <title>购物车页面</title>
     <link rel="stylesheet" href="css/buyer.css">
 </head>
 
 <body>
 <div id="app">
     <div class="header">
-        <input v-model="search" placeholder="搜索商品名" class="search-input">
-        <button @click="getNeedId" class="type-button">搜索</button>
-        <button @click="toCart" class="type-button">打开购物车</button>
+        <button @click="buy" class="type-button">购买</button>
         <button @click="toExit" class="type-button">登出</button>
     </div>
     <template>
@@ -20,9 +18,9 @@
             <img :src="book.imgPath" alt="图片" class="book-image">
             <div class="book-info">
                 <p class="book-name">{{ book.name }}</p>
-                <p class="book-number">剩余数量: {{ book.count }}</p>
+                <p class="book-number">购买数量: {{ book.count }}</p>
                 <p class="book-number">价格: {{ book.price }}</p>
-                <button @click="addCart(book.id)" class="type-button">加入购物车</button>
+                <button @click="removeCart(book.id)" class="type-button">删除</button>
             </div>
         </div>
     </div>
@@ -43,31 +41,15 @@
             },
             methods: {
                 getAll(){
-                    axios.get("/item").then((res)=>{
+                    axios.get("/cart").then((res)=>{
                         this.books = res.data.data;
                         //console.log(res.data.data)
                     })
                 },
-                getNeedId() {
-                    if (this.search !== ""){
-                        axios.get("/item/" + this.search).then((res) => {
-                            if (res.data.total === 0){
-                                alert("未找到任何商品！")
-                            } else {
-                                this.books = res.data.data;
-                            }
-                        })
-                    } else {
-                        alert("搜索内容不能为空！")
-                        axios.get("/item").then((res)=>{
-                            this.books = res.data.data;
-                        })
-                    }
-                },
-                addCart(id) {
-                    //console.log(id)
-                    axios.get("/cart/" + id).then((res)=>{
+                removeCart(id) {
+                    axios.delete("/cart/" + id).then((res)=>{
                         alert(res.data.data)
+                        this.getAll()
                     }).catch(function (error) {
                         if (error.response.status === 400) {
                             alert("未登录，自动跳转到登录页面！")
@@ -75,7 +57,7 @@
                         }
                     });
                 },
-                toCart() {
+                buy() {
                     window.location.href = 'cart.html';
                 },
                 toExit() {

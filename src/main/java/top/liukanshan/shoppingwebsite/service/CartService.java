@@ -7,5 +7,7 @@ import top.liukanshan.shoppingwebsite.entity.Cart;
 public interface CartService extends IService<Cart> {
     Result addCart(Long userId, Long itemId);
 
-    Result getAllCart(Long userId);
+    Result getCart(Long userId);
+
+    Result deleteCart(Long userId, Long itemId);
 }
