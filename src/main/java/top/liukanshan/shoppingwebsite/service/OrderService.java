@@ -6,4 +6,6 @@ import top.liukanshan.shoppingwebsite.entity.Order;
 
 public interface OrderService extends IService<Order> {
     Result newOrder(Long userId);
+
+    Result finishOrder(Long id);
 }

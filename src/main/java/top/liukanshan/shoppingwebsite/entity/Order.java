@@ -13,5 +13,6 @@ public class Order {
     private Long id;
     private long userId;
     private BigDecimal amount;
+    private boolean finish = false;
 
 }

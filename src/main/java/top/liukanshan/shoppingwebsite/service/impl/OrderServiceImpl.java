@@ -67,4 +67,18 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }
         return Result.ok("下单成功");
     }
+
+    @Override
+    public Result finishOrder(Long id) {
+        Order order = orderMapper.selectById(id);
+        if (order == null) {
+            return Result.fail("订单不存在");
+        }
+        if (order.isFinish()) {
+            return Result.fail("订单已完成");
+        }
+        order.setFinish(true);
+        orderMapper.updateById(order);
+        return Result.ok("订单完成");
+    }
 }
