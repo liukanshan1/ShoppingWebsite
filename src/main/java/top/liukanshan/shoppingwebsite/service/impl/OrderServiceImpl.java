@@ -7,6 +7,7 @@ import top.liukanshan.shoppingwebsite.dto.Result;
 import top.liukanshan.shoppingwebsite.entity.*;
 import top.liukanshan.shoppingwebsite.mapper.*;
 import top.liukanshan.shoppingwebsite.service.CartService;
+import top.liukanshan.shoppingwebsite.service.MailService;
 import top.liukanshan.shoppingwebsite.service.OrderItemService;
 import top.liukanshan.shoppingwebsite.service.OrderService;
 
@@ -31,6 +32,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 
     @Autowired
     private OrderItemMapper orderItemMapper;
+
+    @Autowired
+    MailService mailService;
 
     @Override
     public Result newOrder(Long userId) {
@@ -65,6 +69,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         for(Cart cart : carts) {
             cartMapper.deleteById(cart.getId());
         }
+        mailService.sendMail(user.getEmail(),
+                "完成订单：" + order.getId(),
+                "点击链接完成订单：http://localhost:18080/order/" + order.getId());
         return Result.ok("下单成功");
     }
 
