@@ -10,7 +10,7 @@ import top.liukanshan.shoppingwebsite.service.CartService;
 public class CartController {
 
     @Autowired
-    CartService cartService;
+    private CartService cartService;
 
     @GetMapping()
     public Result getCart(@CookieValue("user") Long userId){

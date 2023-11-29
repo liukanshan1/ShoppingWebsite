@@ -58,7 +58,15 @@
                     });
                 },
                 buy() {
-                    window.location.href = 'cart.html';
+                    axios.get("/order").then((res)=>{
+                        if (res.data.success) {
+                            alert("下单成功！")
+                            window.location.href = 'buyer.html';
+                        } else {
+                            alert(res.data.errorMsg)
+                            this.getAll()
+                        }
+                    })
                 },
                 toExit() {
                     window.location.href = 'login.html';
