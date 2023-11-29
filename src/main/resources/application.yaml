@@ -1,9 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://hzx.liukanshan.top:3306/lks?useSSL=true&serverTimezone=UTC
+    url: jdbc:mysql://db.liukanshan.top:3306/lks?useSSL=true&serverTimezone=UTC
     username: lks
-    password: ZRin7yzJGYDJa47S
+    password: ZRin7yzJGYDJa47S # TODO 开源前修改
+  mail:
+    host: smtp.office365.com
+    port: 587
+    username: cuiyuxin2002@outlook.com
+    password: temppasswd1 # TODO 开源前修改
+    default-encoding: UTF-8
+    properties:
+      mail:
+#        debug: true
+        smtp:
+          starttls:
+            enable: true
 mybatis-plus:
   type-aliases-package: top.liukanshan.shoppingwebsite.entity
   configuration:
