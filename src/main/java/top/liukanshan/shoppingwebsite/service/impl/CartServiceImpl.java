@@ -1,16 +1,16 @@
 package top.liukanshan.shoppingwebsite.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.liukanshan.shoppingwebsite.VO.ViewReport;
 import top.liukanshan.shoppingwebsite.dto.Result;
 import top.liukanshan.shoppingwebsite.entity.Cart;
 import top.liukanshan.shoppingwebsite.entity.Item;
 import top.liukanshan.shoppingwebsite.mapper.CartMapper;
 import top.liukanshan.shoppingwebsite.mapper.ItemMapper;
+import top.liukanshan.shoppingwebsite.mapper.UserMapper;
 import top.liukanshan.shoppingwebsite.service.CartService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +22,9 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 
     @Autowired
     private ItemMapper itemMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Result addCart(Long userId, Long itemId) {
@@ -63,5 +66,21 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         } else {
             return Result.fail("删除失败");
         }
+    }
+
+    @Override
+    public Result getViewReport() {
+        List<Cart> carts = cartMapper.selectList(null);
+        List<ViewReport> viewReports = new ArrayList<>();
+        for (Cart cart : carts) {
+            ViewReport viewReport = new ViewReport();
+            viewReport.setViewCount(cart.getCount());
+            viewReport.setName(userMapper.selectById(cart.getUserId()).getUsername());
+            Item item = itemMapper.selectById(cart.getItemId());
+            viewReport.setPrice(item.getPrice());
+            viewReport.setItemName(item.getName());
+            viewReports.add(viewReport);
+        }
+        return Result.ok(viewReports);
     }
 }

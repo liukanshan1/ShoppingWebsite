@@ -22,6 +22,11 @@ public class CartController {
         return cartService.addCart(userId, itemId);
     }
 
+    @GetMapping("/all")
+    public Result getViewReport(){
+        return cartService.getViewReport();
+    }
+
     @DeleteMapping("/{itemId}")
     public Result deleteCart(@CookieValue("user") Long userId, @PathVariable Long itemId){
         return cartService.deleteCart(userId, itemId);

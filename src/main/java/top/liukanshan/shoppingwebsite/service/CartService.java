@@ -10,4 +10,6 @@ public interface CartService extends IService<Cart> {
     Result getCart(Long userId);
 
     Result deleteCart(Long userId, Long itemId);
+
+    Result getViewReport();
 }
