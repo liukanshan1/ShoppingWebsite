@@ -21,4 +21,10 @@
         WHERE user_id = #{userId} AND item_id = #{itemId}
     </delete>
 
+    <select id="selectCountByItemId" resultType="Integer">
+        SELECT SUM(count)
+        FROM  tb_cart
+        WHERE item_id = #{itemId}
+    </select>
+
 </mapper>

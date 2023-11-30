@@ -8,9 +8,11 @@ import java.util.List;
 
 @Mapper
 public interface CartMapper extends BaseMapper<Cart> {
-    public Cart selectByUserItem(long userId, long itemId);
+    Cart selectByUserItem(long userId, long itemId);
 
-    public List<Cart> selectByUserId(long userId);
+    List<Cart> selectByUserId(long userId);
 
-    public int deleteByUserItem(long userId, long itemId);
+    int deleteByUserItem(long userId, long itemId);
+
+    Integer selectCountByItemId(Long itemId);
 }

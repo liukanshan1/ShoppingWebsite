@@ -107,8 +107,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             itemReport.setName(item.getName());
             itemReport.setCount(item.getCount());
             itemReport.setPrice(item.getPrice());
-
+            Integer sellCount = orderItemMapper.selectCountByItemId(item.getId());
+            if (sellCount == null) {
+                sellCount = 0;
+            }
+            itemReport.setSell_count(sellCount);
+            itemReport.setSell_amount(item.getPrice().multiply(new BigDecimal(itemReport.getSell_count())));
+            Integer i = cartMapper.selectCountByItemId(item.getId());
+            if (i == null) {
+                i = 0;
+            }
+            itemReport.setCart_sell_count(itemReport.getSell_count() + i);
+            itemReports.add(itemReport);
         }
-        return null;
+        return Result.ok(itemReports);
     }
 }

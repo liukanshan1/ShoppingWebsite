@@ -6,4 +6,6 @@ import top.liukanshan.shoppingwebsite.entity.OrderItem;
 
 @Mapper
 public interface OrderItemMapper extends BaseMapper<OrderItem> {
+
+    Integer selectCountByItemId(Long itemId);
 }

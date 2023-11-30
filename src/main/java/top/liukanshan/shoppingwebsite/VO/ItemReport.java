@@ -13,7 +13,7 @@ public class ItemReport {
     private String name;
     private Integer count;
     private BigDecimal price;
-    private Integer sell_count;
-    private BigDecimal sell_amount;
-    private Integer cart_sell_count;
+    private Integer sell_count; // 销量
+    private BigDecimal sell_amount; // 销售额
+    private Integer cart_sell_count; // 购物车 + 销量
 }
