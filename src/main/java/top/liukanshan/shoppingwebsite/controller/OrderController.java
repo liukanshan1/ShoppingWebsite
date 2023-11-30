@@ -21,4 +21,9 @@ public class OrderController {
     public Result finishOrder(@PathVariable Long id){
         return orderService.finishOrder(id);
     }
+
+    @GetMapping("/all")
+    public Result getReport(){
+        return orderService.getReport();
+    }
 }

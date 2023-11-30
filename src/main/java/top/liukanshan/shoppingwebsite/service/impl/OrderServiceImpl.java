@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import top.liukanshan.shoppingwebsite.VO.ItemReport;
 import top.liukanshan.shoppingwebsite.dto.Result;
 import top.liukanshan.shoppingwebsite.entity.*;
 import top.liukanshan.shoppingwebsite.mapper.*;
@@ -95,5 +96,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setFinish(true);
         orderMapper.updateById(order);
         return Result.ok("订单完成");
+    }
+
+    @Override
+    public Result getReport() {
+        List<Item> items = itemMapper.selectList(null);
+        List<ItemReport> itemReports = new ArrayList<>();
+        for (Item item : items) {
+            ItemReport itemReport = new ItemReport();
+            itemReport.setName(item.getName());
+            itemReport.setCount(item.getCount());
+            itemReport.setPrice(item.getPrice());
+
+        }
+        return null;
     }
 }
