@@ -10,4 +10,6 @@ public interface OrderService extends IService<Order> {
     Result finishOrder(Long id);
 
     Result getReport();
+
+    Result getAllOrder();
 }

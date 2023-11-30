@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import top.liukanshan.shoppingwebsite.VO.BuyReport;
 import top.liukanshan.shoppingwebsite.VO.ItemReport;
 import top.liukanshan.shoppingwebsite.dto.Result;
 import top.liukanshan.shoppingwebsite.entity.*;
@@ -121,5 +122,24 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             itemReports.add(itemReport);
         }
         return Result.ok(itemReports);
+    }
+
+    @Override
+    public Result getAllOrder() {
+        List<Order> orders = orderMapper.selectList(null);
+        List<BuyReport> buyReports = new ArrayList<>();
+        for (Order order : orders) {
+            BuyReport buyReport = new BuyReport();
+            buyReport.setOrderId(order.getId());
+            buyReport.setName(userMapper.selectById(order.getUserId()).getUsername());
+            buyReport.setAmount(order.getAmount());
+            if (order.isFinish()) {
+                buyReport.setState("已完成");
+            } else {
+                buyReport.setState("未完成");
+            }
+            buyReports.add(buyReport);
+        }
+        return Result.ok(buyReports);
     }
 }

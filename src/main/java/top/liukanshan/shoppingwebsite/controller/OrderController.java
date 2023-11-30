@@ -26,4 +26,9 @@ public class OrderController {
     public Result getReport(){
         return orderService.getReport();
     }
+
+    @GetMapping("/allOrder")
+    public Result getAllOrder(){
+        return orderService.getAllOrder();
+    }
 }
