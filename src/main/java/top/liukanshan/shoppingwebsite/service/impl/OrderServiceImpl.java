@@ -3,6 +3,8 @@ package top.liukanshan.shoppingwebsite.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import top.liukanshan.shoppingwebsite.dto.Result;
 import top.liukanshan.shoppingwebsite.entity.*;
 import top.liukanshan.shoppingwebsite.mapper.*;
@@ -37,6 +39,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     MailService mailService;
 
     @Override
+    @Transactional
     public Result newOrder(Long userId) {
         List<Cart> carts = cartMapper.selectByUserId(userId);
         if (carts.isEmpty()) {
@@ -46,14 +49,22 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         BigDecimal total = new BigDecimal(0);
         for (Cart cart : carts) {
             Item item = itemMapper.selectById(cart.getItemId());
+            if (item.getCount() < cart.getCount()) {
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return Result.fail("库存不足");
+            }
+            item.setCount(item.getCount() - cart.getCount());
+            itemMapper.updateById(item);
             OrderItem orderItem = new OrderItem();
             orderItem.setItemId(item.getId());
             orderItem.setCount(cart.getCount());
             orderItems.add(orderItem);
             total = total.add(item.getPrice().multiply(new BigDecimal(cart.getCount())));
+            cartMapper.deleteById(cart.getId());
         }
         User user = userMapper.selectById(userId);
         if (user.getBalance().compareTo(total) < 0) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return Result.fail("余额不足");
         }
         user.setBalance(user.getBalance().subtract(total));
@@ -65,9 +76,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         for(OrderItem orderItem:orderItems){
             orderItem.setOrderId(order.getId());
             orderItemMapper.insert(orderItem);
-        }
-        for(Cart cart : carts) {
-            cartMapper.deleteById(cart.getId());
         }
         mailService.sendMail(user.getEmail(),
                 "完成订单：" + order.getId(),
