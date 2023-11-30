@@ -25,7 +25,11 @@ public class ItemController {
 
     @PostMapping()
     public Result insertItem(@RequestBody Item item){
-        return itemService.insertItem(item);
+        if (item.getId() != null) {
+            return itemService.modifyItem(item);
+        } else {
+            return itemService.insertItem(item);
+        }
     }
 
     @DeleteMapping()
@@ -37,6 +41,4 @@ public class ItemController {
     public Result modifyItem(@RequestBody Item item){
         return itemService.modifyItem(item);
     }
-
-
 }
