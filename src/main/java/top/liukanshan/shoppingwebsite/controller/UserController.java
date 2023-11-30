@@ -26,4 +26,9 @@ public class UserController {
         user.setBalance(new BigDecimal(0));
         return userService.register(user);
     }
+
+    @GetMapping
+    public Result getUsers() {
+        return userService.getUsers();
+    }
 }

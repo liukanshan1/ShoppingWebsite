@@ -10,4 +10,5 @@ public interface UserService extends IService<User> {
     Result login(User user, HttpServletResponse response);
     Result register(User user);
 
+    Result getUsers();
 }
