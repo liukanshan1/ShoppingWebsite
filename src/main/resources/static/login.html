@@ -44,7 +44,11 @@
                 axios.post('/user', this.user).then((res) => {
                     if (res.data.success) {
                         document.cookie = res.data.data;
-                        window.location.href = 'buyer.html'
+                        if (res.data.errorMsg === '0'){
+                            window.location.href = 'admin.html'
+                        } else {
+                            window.location.href = 'buyer.html'
+                        }
                     } else {
                         alert(res.data.errorMsg);
                     }

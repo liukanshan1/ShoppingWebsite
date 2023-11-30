@@ -11,6 +11,8 @@ import top.liukanshan.shoppingwebsite.entity.User;
 import top.liukanshan.shoppingwebsite.mapper.UserMapper;
 import top.liukanshan.shoppingwebsite.service.UserService;
 
+import java.math.BigDecimal;
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
@@ -23,7 +25,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (u != null) {
             if (u.getPassword().equals(user.getPassword())) {
                 response.addCookie(new Cookie("user" , u.getId().toString()));
-                return Result.ok();
+                Result ok = Result.ok();
+                ok.setErrorMsg(u.getRole());
+                return ok;
             } else {
                 return Result.fail("密码错误");
             }
@@ -38,6 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (u != null) {
             return Result.fail("用户已存在");
         } else {
+            user.setBalance(new BigDecimal("100"));
             boolean b = save(user);
             if (b) {
                 return Result.ok("注册成功");
